@@ -18,18 +18,15 @@ typedef struct _scelibent_common { // size is 0x10
 
 typedef struct _scelibent_1C { // size is 0x1C
 	sceKernelLibraryEntryTable_common c;
-	//const void *libname;
-	//const void *nid_table;
-	//const void *entry_table;
-	uint32_t libname;
-	uint32_t nid_table;
-	uint32_t entry_table;
+        const void *libname;
+	const void *nid_table;
+	const void *entry_table;
 } sceKernelLibraryEntryTable_1C;
 
-/*static const uint32_t exportNidTable[] __attribute__((aligned(0),section(".rodata.sceResident.aanidTable#"),unused)) = {
+static const uint32_t exportNidTable[] __attribute__((aligned(0),section(".rodata.sceResident.nidTable#"),unused)) = {
     0xbc9a0086, //module_start,
     0xab779874 //module_stop
-};*/
+};
 
 
 int test_entry_func() {
@@ -43,7 +40,7 @@ int test_entry_stop() {
 
 extern uint8_t bss_stub_data[256] __attribute__((section(".bss")));
 
-/*__attribute__((aligned(4),section(".opd.text_entry_stop"),unused))
+__attribute__((aligned(4),section(".opd.text_entry_stop"),unused))
 struct opd_s test_entry_func_opd = { test_entry_func,  &bss_stub_data + TOC_OFFSET };
 __attribute__((aligned(4),section(".opd.text_entry_stop"),unused))
 struct opd_s text_entry_stop_opd = { test_entry_stop,  &bss_stub_data + TOC_OFFSET };
@@ -51,16 +48,17 @@ struct opd_s text_entry_stop_opd = { test_entry_stop,  &bss_stub_data + TOC_OFFS
 
 
 
-static const void* exportEntryTable[] __attribute__((aligned(0),section(".rodata.sceResident.zzentryTable#"),unused)) = {
+static const void* exportEntryTable[] __attribute__((aligned(0),section(".rodata.sceResident.exportTable#"),unused)) = {
    &test_entry_func_opd,
    &text_entry_stop_opd
 };
 
-*/
 
-static const sceKernelLibraryEntryTable_common libent_table                              
+
+static const sceKernelLibraryEntryTable_1C libent_table                              
        __attribute__((aligned(0), section(".lib.ent#"),unused)) = 
         {
+                {
         sizeof(sceKernelLibraryEntryTable_1C),
         0,
         0,
@@ -71,4 +69,6 @@ static const sceKernelLibraryEntryTable_common libent_table
         0,
         0,
         0,
-        0};
+        0},
+        NULL, &exportNidTable, &exportEntryTable
+        };

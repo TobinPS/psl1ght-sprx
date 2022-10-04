@@ -1,9 +1,7 @@
-ppu-gcc -r source/libent.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/libent.o
-ppu-gcc -r source/libent.s -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/libent_s.o
-ppu-gcc -r source/modinfo.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/modinfo.o
-ppu-gcc -r source/modinfo.s -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/modinfo_s.o
+ppu-gcc -m32 source/libent.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/libent.o
+ppu-gcc -m32 source/modinfo.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/modinfo.o
 
-ppu-gcc -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -T crt/lv2.ld objs/*.o -o test.prx
+ppu-gcc -m32 -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -T crt/lv2.ld objs/*.o -o test.prx
 
 #possibly dangerous hacks
 printf '\x66' | dd of=test.prx bs=1 seek=7 count=1 conv=notrunc #change processor type

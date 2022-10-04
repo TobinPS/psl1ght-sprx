@@ -1,20 +1,19 @@
 OUTPUT_FORMAT("elf64-powerpc", "elf64-powerpc", "elf64-powerpc")
-OUTPUT_ARCH(powerpc:common64)
+OUTPUT_ARCH(powerpc:common)
 
 PHDRS
 {
-	hdr_text	PT_LOAD FILEHDR PHDRS	FLAGS(0x01 | 0x04 | 0x400000);
-	hdr_data	PT_LOAD					FLAGS(0x02 | 0x04 | 0x600000);
-  	hdr_rela	0x700000a4					FLAGS(0x00);
+	hdr_text	PT_LOAD 	FLAGS(0x01 | 0x04 | 0x400000);
+	hdr_data	PT_LOAD		FLAGS(0x02 | 0x04 | 0x600000);
 }
 
 SECTIONS
 {
-	. = SIZEOF_HEADERS;
-
-  .rela : {
-    KEEP (*(.rela.*))
-  } : hdr_rela
+	. = 0x0;
+  	.rodata.sceModuleInfo : { 
+		KEEP (*(.rodata.sceModuleInfo.*)) 
+		*(SORT(.rodata.sceModuleInfo.*))
+   	} : hdr_text
 
 	.text           : {
 		*(.text .stub .text.* .gnu.linkonce.t.*)
@@ -38,13 +37,8 @@ SECTIONS
 	.eh_frame       : ONLY_IF_RO { KEEP (*(.eh_frame)) }
 	.gcc_except_table   : ONLY_IF_RO { *(.gcc_except_table .gcc_except_table.*) }
 
-  	.rodata.sceModuleInfo : { 
-		KEEP (*(.rodata.sceModuleInfo.*)) 
-		*(SORT(.rodata.sceModuleInfo.*))
-   	} : hdr_text
-
 	
-	.rodata.sceResident : { KEEP (*(.rodata.sceResident)) } : hdr_text
+	.rodata.sceResident : { KEEP (*(.rodata.sceResident.*)) } : hdr_text
 	.rodata.sceFNID     : { KEEP (*(.rodata.sceFNID .rodata.sceFNID.*)) } : hdr_text
 	.rodata.sceVNID     : { KEEP (*(.rodata.sceVNID .rodata.sceVNID.*)) } : hdr_text
 	.rodata.sceTNID     : { KEEP (*(.rodata.sceTNID .rodata.sceTNID.*)) } : hdr_text
