@@ -41,9 +41,9 @@ int test_entry_stop() {
 extern uint8_t bss_stub_data[256] __attribute__((section(".bss")));
 
 __attribute__((aligned(4),section(".opd.text_entry_stop"),unused))
-struct opd_s test_entry_func_opd = { test_entry_func,  &bss_stub_data + TOC_OFFSET };
+struct opd_s test_entry_func_opd = { test_entry_func,  &bss_stub_data };
 __attribute__((aligned(4),section(".opd.text_entry_stop"),unused))
-struct opd_s text_entry_stop_opd = { test_entry_stop,  &bss_stub_data + TOC_OFFSET };
+struct opd_s text_entry_stop_opd = { test_entry_stop,  &bss_stub_data };
 
 
 

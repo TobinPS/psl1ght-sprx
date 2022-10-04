@@ -5,6 +5,7 @@ PHDRS
 {
 	hdr_text	PT_LOAD 	FLAGS(0x01 | 0x04 | 0x400000);
 	hdr_data	PT_LOAD		FLAGS(0x02 | 0x04 | 0x600000);
+	hdr_rela	0x700000a4					FLAGS(0x00);
 }
 
 SECTIONS
@@ -79,6 +80,10 @@ SECTIONS
 	.rodata1        : { *(.rodata1) } : hdr_text
 
 	.spu_image		: { *(.spu_image .spu_image.*) } : hdr_srodata
+
+	.rela : {
+	    KEEP (*(.rela.*))
+  	} : hdr_rela
 
   . = ALIGN(32K);
 	

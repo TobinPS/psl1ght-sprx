@@ -40,5 +40,5 @@ const uint8_t bss_stub_data[256] __attribute__((section(".bss")));
        
 
 static const const sceModuleInfo_v0 modInfo __attribute__((aligned(0),section(".rodata.sceModuleInfo.modInfo#"))) = {
-    {0, {0, 1}, LIBRARY_NAME, 0}, (void *)(&bss_stub_data + TOC_OFFSET), (void *)(&__begin_of_section_lib_ent + 1), (void *)(&__end_of_section_lib_ent),  (void *)(&__begin_of_section_lib_stub + 1), (void *)(&__end_of_section_lib_stub)
+    {0, {0, 1}, LIBRARY_NAME, 0}, (void *)(&bss_stub_data), (void *)(&__begin_of_section_lib_ent + 1), (void *)(&__end_of_section_lib_ent),  (void *)(&__begin_of_section_lib_stub + 1), (void *)(&__end_of_section_lib_stub)
 };
