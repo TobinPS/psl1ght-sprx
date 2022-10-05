@@ -56,11 +56,13 @@ SECTIONS
 	.lib.ent.btm : { KEEP (*(.lib.ent.btm)) } : hdr_text
 	
 
-	PROVIDE (__libstubstart = . + 0x04);
+	
 	.lib.stub.top : { KEEP (*(.lib.stub.top)) } : hdr_text
+	PROVIDE (__libstubstart = .);
 	.lib.stub	  : { KEEP (*(.lib.stub)) } : hdr_text
+	PROVIDE (__libstubend = .);
 	.lib.stub.btm : { KEEP (*(.lib.stub.btm)) } : hdr_text
-	PROVIDE (__libstubend = . - 0x04);
+	
 
 
 	.data.sceFStub      : { KEEP (*(.data.sceFStub)) KEEP (*(SORT(.data.sceFStub.*))) } : hdr_data
@@ -84,8 +86,7 @@ SECTIONS
 	    KEEP (*(.rela.*))
   	} : hdr_rela
 
-  . = ALIGN(32K);
-	
+
 	.data           :
 	{
 		*(.data .data.* .gnu.linkonce.d.*)

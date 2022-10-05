@@ -67,7 +67,7 @@ static const void* exportEntryTable[] __attribute__((aligned(4),section(".rodata
 
 
 static const sceKernelLibraryEntryTable_1C libent_table                              
-       __attribute__((aligned(0), section(".lib.ent#"),unused)) = 
+       __attribute__((aligned(0), section(".lib.ent"),unused)) = 
         {
                 {
         sizeof(sceKernelLibraryEntryTable_1C),
