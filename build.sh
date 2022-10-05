@@ -1,6 +1,7 @@
-ppu-gcc -m32 source/libent.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/libent.o
+rm objs/*.o
+ppu-gcc -m32 -Wa,-mcell source/libent.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/libent.o
+ppu-gcc -m32 source/exit_thread.s -fPIC -fPIE -c -o objs/exit_thread.o
 ppu-gcc -m32 source/modinfo.c -I $PSL1GHT/ppu/include/ -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -c -o objs/modinfo.o
-
 ppu-gcc -m32 -ffunction-sections -fdata-sections -nodefaultlibs -nostdlib -fPIC -fPIE -T crt/lv2.ld objs/*.o -o test.prx
 
 #possibly dangerous hacks
@@ -8,6 +9,7 @@ printf '\x66' | dd of=test.prx bs=1 seek=7 count=1 conv=notrunc #change processo
 printf '\xff\xa4' | dd of=test.prx bs=1 seek=16 count=2 conv=notrunc #change to prx type
 printf '\x00\x00\x00' | dd of=test.prx bs=1 seek=29 count=3 conv=notrunc #null entry point
 printf '\x01' | dd of=test.prx bs=1 seek=48 count=1 conv=notrunc #attributes 0x10000
-scetool -0 SELF -2 00 -3 1010000001000003 -4 01000002 -5 APP  -A 0001000000000000 -e test.prx test.sprx
+#scetool -0 SELF -2 00 -3 1010000001000003 -4 01000002 -5 APP  -A 0001000000000000 -e test.prx test.sprx
+#make_self test.prx test.sprx
 
 ppu-readelf -h test.prx

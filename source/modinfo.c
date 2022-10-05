@@ -36,7 +36,7 @@ static const int __end_of_section_lib_stub[1]
        __attribute__((aligned(4),section(".lib.stub.btm"),unused)) = {0};
 
 
-const uint8_t bss_stub_data[256] __attribute__((section(".bss")));
+const uint8_t bss_stub_data[256];
        
 
 static const const sceModuleInfo_v0 modInfo __attribute__((aligned(0),section(".rodata.sceModuleInfo.modInfo#"))) = {

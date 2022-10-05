@@ -10,12 +10,11 @@ PHDRS
 
 SECTIONS
 {
-	. = 0x0;
+	. = SIZEOF_HEADERS;
   	.rodata.sceModuleInfo : { 
 		KEEP (*(.rodata.sceModuleInfo.*)) 
 		*(SORT(.rodata.sceModuleInfo.*))
    	} : hdr_text
-
 	.text           : {
 		*(.text .stub .text.* .gnu.linkonce.t.*)
 		KEEP (*(.text.*personality*))
